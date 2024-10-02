@@ -43,13 +43,14 @@ class Settings(BaseSettings):
 
     ENABLE_SSL: bool = False
 
-    PAINT_REWARD_MAX: int = 5 # max is 7
-    ENERGY_LIMIT_MAX: int = 5 # max is 6
-    RE_CHARGE_SPEED_MAX: int = 5 # max is 11
+    PAINT_REWARD_MAX: int = 5 
+    ENERGY_LIMIT_MAX: int = 5 
+    RE_CHARGE_SPEED_MAX: int = 5 
 
     BOOSTS_BLACK_LIST: list[str] = ['invite3frens', 'INVITE_FRIENDS', 'TON_TRANSACTION', 'BOOST_CHANNEL', 'ACTIVITY_CHALLENGE', 'CONNECT_WALLET']
     TASKS_TODO_LIST: list[str] = ["x:notcoin", "x:notpixel", "paint20pixels", "leagueBonusSilver", "leagueBonusGold", "leagueBonusPlatinum", "channel:notpixel_channel", "channel:notcoin", "premium"]
 
+    PROXY_TYPE: str = 'socks5'
     USE_PROXY_FROM_FILE: bool = True
 
 

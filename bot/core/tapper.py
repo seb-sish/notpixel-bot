@@ -36,7 +36,7 @@ from bot.exceptions import InvalidSession
 self_tg_client = SelfTGClient()
 
 class Tapper:
-    def __init__(self, tg_client: Client):
+    def __init__(self, tg_client: Client, User_Agent: str | None):
         self.session_name = tg_client.name
         self.tg_client = tg_client
         self.user_id = 0
@@ -50,11 +50,14 @@ class Tapper:
         self.game_service_is_unavailable = False
         self.already_joined_squad_channel = None
 
-        self.session_ug_dict = self.load_user_agents() or []
+        self.session_ug_dict = []
+        if User_Agent:
+            headers['User-Agent'] = User_Agent
+        else:
 
-        headers['User-Agent'] = self.check_user_agent()
+            headers['User-Agent'] = self.check_user_agent()
         headers_notcoin['User-Agent'] = headers['User-Agent']
-
+    
     async def generate_random_user_agent(self):
         return generate_random_user_agent(device_type='android', browser_type='chrome')
 
@@ -128,7 +131,7 @@ class Tapper:
 
     async def get_tg_web_data(self, proxy: str | None) -> str:
         if proxy:
-            proxy = Proxy.from_str(proxy)
+            proxy = Proxy.from_str(settings.PROXY_TYPE+'://'+proxy)
             proxy_dict = dict(
                 scheme=proxy.protocol,
                 hostname=proxy.host,
@@ -148,13 +151,16 @@ class Tapper:
                 with_tg = False
                 try:
                     await self.tg_client.connect()
-                except (Unauthorized, UserDeactivated, AuthKeyUnregistered):
-                    raise InvalidSession(self.session_name)
-
+                    if self.user_id is None:
+                        user = await self.tg_client.get_me()
+                        self.user_id = user.id
+                except (Unauthorized, UserDeactivated, AuthKeyUnregistered) as error:
+                        raise RuntimeError(str(error)) from error
+                
             if settings.USE_REF == True and settings.REF_ID:
                 ref_id = settings.REF_ID
             else:
-                ref_id = 'f355876562'
+                ref_id = ''
 
             if settings.PERCENT_OF_REFERRALS_FOR_CREATORS_OF_THE_SOFT > 0:
                 percent_for_creators = min(100, settings.PERCENT_OF_REFERRALS_FOR_CREATORS_OF_THE_SOFT)
@@ -212,7 +218,7 @@ class Tapper:
 
     async def get_tg_web_data_not(self, proxy: str | None) -> str:
         if proxy:
-            proxy = Proxy.from_str(proxy)
+            proxy = Proxy.from_str(settings.PROXY_TYPE+'://'+proxy)
             proxy_dict = dict(
                 scheme=proxy.protocol,
                 hostname=proxy.host,
@@ -587,7 +593,7 @@ class Tapper:
         refresh_token = None
         login_need = True
 
-        proxy_conn = ProxyConnector().from_url(proxy) if proxy else None
+        proxy_conn = ProxyConnector().from_url(settings.PROXY_TYPE+"://"+proxy) if proxy else None
 
         http_client = CloudflareScraper(headers=headers, connector=proxy_conn)
 
@@ -670,8 +676,9 @@ class Tapper:
             except Exception as error:
                 self.error(f"Unknown error: <light-yellow>{error}</light-yellow>")
 
-async def run_tapper(tg_client: Client, proxy: str | None):
+async def run_tapper(tg_client: Client, data: dict):
     try:
-        await Tapper(tg_client=tg_client).run(proxy=proxy)
+        await Tapper(tg_client=tg_client, User_Agent=data['ua']).run(proxy=data['proxy'])
     except InvalidSession:
-        self.error(f"{tg_client.name} | Invalid Session")
+        from bot.utils import error
+        error(f"<light-yellow>{data['']}</light-yellow> | 😢 {tg_client.name} | Invalid Session")
