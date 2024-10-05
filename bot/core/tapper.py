@@ -186,7 +186,7 @@ class Tapper:
                 platform='android',
                 write_allowed=True,
                 start_param=self.start_param
-            ), self)
+            ))
 
             auth_url = web_view.url
 
@@ -209,7 +209,8 @@ class Tapper:
             return tg_web_data
 
         except InvalidSession as error:
-            raise error
+            self.error(f"Session error during Authorization: <light-yellow>{error}</light-yellow>")
+            await asyncio.sleep(delay=10)
 
         except Exception as error:
             self.error(
@@ -278,6 +279,28 @@ class Tapper:
             self.error(f"Unknown error during getting web data for squads: <light-yellow>{error}</light-yellow>")
             await asyncio.sleep(delay=3)
 
+    def is_night_time(self):
+        night_start = settings.NIGHT_TIME[0]
+        night_end = settings.NIGHT_TIME[1]
+
+        # Get the current hour
+        current_hour = datetime.now().hour
+
+        if current_hour >= night_start or current_hour < night_end:
+            return True
+
+        return False
+
+    def time_until_morning(self):
+        morning_time = datetime.now().replace(hour=6, minute=0, second=0, microsecond=0)
+
+        if datetime.now() >= morning_time:
+            morning_time += timedelta(days=1)
+
+        time_remaining = morning_time - datetime.now()
+
+        return time_remaining.total_seconds() / 60
+
     async def check_proxy(self, http_client: aiohttp.ClientSession, proxy: Proxy) -> None:
         try:
             response = await http_client.get(url='https://httpbin.org/ip', timeout=aiohttp.ClientTimeout(5))
@@ -286,17 +309,29 @@ class Tapper:
         except Exception as error:
             self.error(f"Proxy: {proxy} | Error: {error}")
 
-    async def get_user_info(self, http_client: aiohttp.ClientSession):
-        try:
-            response = await http_client.get("https://notpx.app/api/v1/users/me", ssl=settings.ENABLE_SSL)
+    async def get_user_info(self, http_client: aiohttp.ClientSession, show_error_message: bool):
+        ssl = settings.ENABLE_SSL
+        err = None
 
-            response.raise_for_status()
+        for _ in range(2):
+            try:
+                response = await http_client.get("https://notpx.app/api/v1/users/me", ssl=ssl)
 
-            data = await response.json()
+                response.raise_for_status()
 
-            return data
-        except Exception as error:
-            self.error(f"{self.session_name} | Unknown error during get user info: <light-yellow>{error}</light-yellow>")
+                data = await response.json()
+
+                err = None
+
+                return data
+            except Exception as error:
+                ssl = not ssl
+                self.info(f"First get user info request not always successful, retrying..")
+                err = error
+                continue
+
+        if err != None and show_error_message == True:
+            self.error(f"Unknown error during get user info: <light-yellow>{err}</light-yellow>")
             return None
 
     async def get_balance(self, http_client: aiohttp.ClientSession):
@@ -421,7 +456,7 @@ class Tapper:
 
             await asyncio.sleep(delay=random.randint(1, 3))
 
-            user = await self.get_user_info(http_client=http_client)
+            user = await self.get_user_info(http_client=http_client, show_error_message=False)
 
             res.raise_for_status()
 
@@ -430,7 +465,7 @@ class Tapper:
             tasks = data['tasks'].keys()
 
             for task in settings.TASKS_TODO_LIST:
-                if task == 'premium' and not 'isPremium' in user:
+                if user != None and task == 'premium' and not 'isPremium' in user:
                     continue
 
                 if task not in tasks:
@@ -634,7 +669,7 @@ class Tapper:
                 break
 
             try:
-                user = await self.get_user_info(http_client=http_client)
+                user = await self.get_user_info(http_client=http_client, show_error_message=True)
 
                 await asyncio.sleep(delay=2)
 
@@ -670,6 +705,15 @@ class Tapper:
                 sleep_time = random.randint(settings.SLEEP_TIME_IN_MINUTES[0], settings.SLEEP_TIME_IN_MINUTES[1])
 
                 self.info(f"sleep {sleep_time} minutes between cycles 💤")
+
+                is_night = False
+
+                if settings.DISABLE_IN_NIGHT:
+                    is_night = self.is_night_time()
+
+                if is_night:
+                    end_night_time = settings.NIGHT_TIME[1]
+                    sleep_time = self.time_until_morning()
 
                 await asyncio.sleep(delay=sleep_time*60)
 
