@@ -19,7 +19,7 @@
 ## MY OTHER BOTS
 
 ### 💩 [Boinkers](https://github.com/YarmolenkoD/boinkers)
-### 🚀 [Moonbix](https://github.com/YarmolenkoD/moonbix)
+### 🚀 [Moonbix](https://github.com/YarmolenkoD/moonbix) [NOT WORKING]
 
 ## Recommendation before use
 
@@ -61,6 +61,12 @@
 |            **DRAW_RANDOM_Y_DIAPOSON**             |                      Range of pixels on the н-axis, randomly on which it will draw (default - [0,100])                       |
 |              **DRAW_RANDOM_COLORS**               |                     List of colors that will be randomly selected for painting  (default - ["#000000"])                      |
 |                  **ENABLE_SSL**                   | Enable verification of ssl certificates (sometimes it can help with SSL: CERTIFICATE_VERIFY_FAILED error)  (default - False) |
+|       **ENABLE_AUTO_JOIN_TO_SQUAD_CHANNEL**       |                                 Enable auto join to squad telegram channel (default - False)                                 |
+|           **ENABLE_AUTO_JOIN_TO_SQUAD**           |                                          Enable auto join to squad (default - True)                                          |
+|                  **SQUAD_SLUG**                   |                               Squad slug [telegram channel slug] (default - notpixel_raiders)                                |
+|               **DISABLE_IN_NIGHT**                |                                          Disable script in night (default - False)                                           |
+|                  **NIGHT_TIME**                   |                                          Night time [from, to] (default - [23, 6])                                           |
+|          **ENABLE_EXPERIMENTAL_X3_MODE**          |                                         Enable experimental X3 mode (default - False)                                         |
 
 ## Quick Start 📚
 

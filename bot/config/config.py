@@ -28,10 +28,11 @@ class Settings(BaseSettings):
     DISABLE_IN_NIGHT: bool = False
     NIGHT_TIME: list[int] = [23, 6]
 
-    DRAW_RANDOM_X_DIAPOSON: list[int] = [479, 489]
-    DRAW_RANDOM_Y_DIAPOSON: list[int] = [521, 525]
-    DRAW_RANDOM_COLORS: list[str] = ["#ffffff"]
+    DRAW_RANDOM_X_DIAPOSON: list[int] = [480, 510]
+    DRAW_RANDOM_Y_DIAPOSON: list[int] = [480, 500]
+    DRAW_RANDOM_COLORS: list[str] = ["#000000"]
 
+    ENABLE_EXPERIMENTAL_X3_MODE: bool = False
     ENABLE_DRAW_ART: bool = False
     DRAW_ART_COORDS: list[dict] = [
         {
@@ -43,13 +44,12 @@ class Settings(BaseSettings):
 
     ENABLE_SSL: bool = False
 
-    PAINT_REWARD_MAX: int = 5 
-    ENERGY_LIMIT_MAX: int = 5 
-    RE_CHARGE_SPEED_MAX: int = 5 
+    PAINT_REWARD_MAX: int = 5
+    ENERGY_LIMIT_MAX: int = 6
+    RE_CHARGE_SPEED_MAX: int = 7
 
     BOOSTS_BLACK_LIST: list[str] = ['invite3frens', 'INVITE_FRIENDS', 'TON_TRANSACTION', 'BOOST_CHANNEL', 'ACTIVITY_CHALLENGE', 'CONNECT_WALLET']
-#     TASKS_TODO_LIST: list[str] = ["x:notcoin", "x:notpixel", "paint20pixels", "leagueBonusSilver", "leagueBonusGold", "leagueBonusPlatinum", "channel:notpixel_channel", "channel:notcoin", "premium"]
-    TASKS_TODO_LIST: list[str] = ["x:notcoin", "x:notpixel", "paint20pixels", "leagueBonusSilver", "leagueBonusGold", "channel:notpixel_channel", "channel:notcoin"]
+    TASKS_TODO_LIST: list[str] = ["x:notcoin", "x:notpixel", "paint20pixels", "leagueBonusSilver", "leagueBonusGold", "leagueBonusPlatinum", "channel:notpixel_channel", "channel:notcoin"]
 
     PROXY_TYPE: str = 'socks5'
     USE_PROXY_FROM_FILE: bool = True
