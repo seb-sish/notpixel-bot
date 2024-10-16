@@ -170,6 +170,12 @@ sessions*/
 
 *.session
 
+bot/assets/templates
+
 user_agents.json
 
-*.json
+node_modules
+index.js
+package-lock.json
+package.json
+

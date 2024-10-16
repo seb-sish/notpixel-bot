@@ -17,7 +17,7 @@ class Settings(BaseSettings):
 
     ENABLE_AUTO_TASKS: bool = True
     ENABLE_AUTO_DRAW: bool = True
-    ENABLE_JOIN_TG_CHANNELS: bool = False
+    UNSAFE_ENABLE_JOIN_TG_CHANNELS: bool = False # NOT RECOMMENDED
     ENABLE_CLAIM_REWARD: bool = True
     ENABLE_AUTO_UPGRADE: bool = True
 
@@ -28,19 +28,10 @@ class Settings(BaseSettings):
     DISABLE_IN_NIGHT: bool = False
     NIGHT_TIME: list[int] = [23, 6]
 
-    DRAW_RANDOM_X_DIAPOSON: list[int] = [480, 510]
-    DRAW_RANDOM_Y_DIAPOSON: list[int] = [480, 500]
-    DRAW_RANDOM_COLORS: list[str] = ["#000000"]
-
-    ENABLE_EXPERIMENTAL_X3_MODE: bool = False
-    ENABLE_DRAW_ART: bool = False
-    DRAW_ART_COORDS: list[dict] = [
-        {
-            'color': "#6A5CFF",
-            'x': { 'type': 'diaposon', 'value': [995, 999] },
-            'y': { 'type': 'random', 'value': [995, 999] }
-        }
-    ]
+    ENABLE_SOCKETS: bool = False
+    ENABLE_RANDOM_CUSTOM_TEMPLATE: bool = False
+    ENABLE_DRAW_CUSTOM_TEMPLATE: bool = True
+    CUSTOM_TEMPLATE_ID: int = 355876562
 
     ENABLE_SSL: bool = False
 
@@ -53,6 +44,23 @@ class Settings(BaseSettings):
 
     PROXY_TYPE: str = 'socks5'
     USE_PROXY_FROM_FILE: bool = True
+
+    # LEGACY CONFIGURATIONS
+    ENABLE_DRAW_ART: bool = False
+    DRAW_ART_COORDS: list[dict] = [
+        {
+            'color': "#6A5CFF",
+            'x': { 'type': 'diaposon', 'value': [995, 999] },
+            'y': { 'type': 'random', 'value': [995, 999] }
+        }
+    ]
+    DRAW_RANDOM_X_DIAPOSON: list[int] = [390, 435]
+    DRAW_RANDOM_Y_DIAPOSON: list[int] = [415, 445]
+    DRAW_RANDOM_COLORS: list[str] = ["#3690EA"]
+
+    ENABLE_EXPERIMENTAL_X3_MODE: bool = True
+
+    UNABLE_JOIN_TG_CHANNELS: bool = False # NOT RECOMMENDED
 
 
 settings = Settings()

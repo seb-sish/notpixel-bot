@@ -12,10 +12,6 @@
 > [!WARNING]
 > I am not responsible for your account. Please consider the potential risks before using this bot.
 
-### Forked from the repository [github](https://github.com/vadymfedorets/notpixel) 🎨
-### Thanks to [Vadym](https://github.com/vadymfedorets) for the code base 🚀
-### Subscribe to him and put stars to his bots 🔥
-
 ## MY OTHER BOTS
 
 ### 💩 [Boinkers](https://github.com/YarmolenkoD/boinkers)
@@ -34,6 +30,7 @@
 |              Proxy binding to session              |     ✅     |
 |           Support for pyrogram .session            |     ✅     |
 | Auto-register your account with your referral code |     ✅     |
+|                     X3 POINTS                      |     ✅     |
 |                     Auto tasks                     |     ✅     |
 |                     Auto games                     |     ✅     |
 |                    Авто drawing                    |     ✅     |
@@ -54,19 +51,15 @@
 |              **USE_PROXY_FROM_FILE**              |                         Whether to use a proxy from the `bot/config/proxies.txt` file (True / False)                         |
 |               **ENABLE_AUTO_TASKS**               |                                               Enable auto tasks (True / False)                                               |
 |               **ENABLE_AUTO_DRAW**                |                                              Enable auto drawing (True / False)                                              |
-|            **ENABLE_JOIN_TG_CHANNELS**            |                                      Enable auto joining to tg channels (True / False)                                       |
+|        **UNSAFE_ENABLE_JOIN_TG_CHANNELS**         |                                [!!UNSAFE!!] Enable auto joining to tg channels (True / False)                                |
 |              **ENABLE_CLAIM_REWARD**              |                                         Enable auto claim of rewards (True / False)                                          |
 |              **ENABLE_AUTO_UPGRADE**              |                                             Enable auto upgrading (True / False)                                             |
-|            **DRAW_RANDOM_X_DIAPOSON**             |                      Range of pixels on the x-axis, randomly on which it will draw (default - [0,100])                       |
-|            **DRAW_RANDOM_Y_DIAPOSON**             |                      Range of pixels on the н-axis, randomly on which it will draw (default - [0,100])                       |
-|              **DRAW_RANDOM_COLORS**               |                     List of colors that will be randomly selected for painting  (default - ["#000000"])                      |
 |                  **ENABLE_SSL**                   | Enable verification of ssl certificates (sometimes it can help with SSL: CERTIFICATE_VERIFY_FAILED error)  (default - False) |
 |       **ENABLE_AUTO_JOIN_TO_SQUAD_CHANNEL**       |                                 Enable auto join to squad telegram channel (default - False)                                 |
 |           **ENABLE_AUTO_JOIN_TO_SQUAD**           |                                          Enable auto join to squad (default - True)                                          |
 |                  **SQUAD_SLUG**                   |                               Squad slug [telegram channel slug] (default - notpixel_raiders)                                |
 |               **DISABLE_IN_NIGHT**                |                                          Disable script in night (default - False)                                           |
 |                  **NIGHT_TIME**                   |                                          Night time [from, to] (default - [23, 6])                                           |
-|          **ENABLE_EXPERIMENTAL_X3_MODE**          |                                         Enable experimental X3 mode (default - False)                                         |
 
 ## Quick Start 📚
 
