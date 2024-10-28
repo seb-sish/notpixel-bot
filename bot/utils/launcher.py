@@ -30,16 +30,11 @@ My other bots:
 💩Boinkers - https://github.com/YarmolenkoD/boinkers
 🚀Moonbix - https://github.com/YarmolenkoD/moonbix [GAME IS NOT WORKING]
 
-NEW ENV VARIABLES:
-
-ENABLE_RANDOM_CUSTOM_TEMPLATE=True (Default = True)
-ENABLE_DRAW_CUSTOM_TEMPLATE=True (Default = True)
-CUSTOM_TEMPLATE_ID=355876562 (Default = 355876562)
-
 Select an action:
 
-    1. Create a session 👨‍🎨
-    2. Start drawing 🎨️ 
+    1. Start drawing 🎨️
+    2. Create a session 👨‍🎨
+    3. Get actual templates list 🖼
 """
 
 global tg_clients
@@ -138,8 +133,8 @@ async def process() -> None:
 
             if not action.isdigit():
                 logger.warning("Action must be number")
-            elif action not in ["1", "2"]:
-                logger.warning("Action must be 1 or 2")
+            elif action not in ["1", "2", "3"]:
+                logger.warning("Action must be 1, 2 or 3")
             else:
                 action = int(action)
                 break
@@ -149,8 +144,10 @@ async def process() -> None:
 
     elif action == 2:
         tg_clients, session_data = await get_tg_clients()
-
+    
         await run_tasks(tg_clients=tg_clients, session_data=session_data)
+    elif action == 3:
+        settings.SHOW_TEMPLATES_LIST = True
 
 async def run_tasks(tg_clients: list[Client], session_data: dict):
     tasks = [
