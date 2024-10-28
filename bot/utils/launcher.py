@@ -148,6 +148,9 @@ async def process() -> None:
         await run_tasks(tg_clients=tg_clients, session_data=session_data)
     elif action == 3:
         settings.SHOW_TEMPLATES_LIST = True
+        tg_clients, session_data = await get_tg_clients()
+
+        await run_tasks(tg_clients=[tg_clients[0]], session_data=session_data[tg_clients[0].name])
 
 async def run_tasks(tg_clients: list[Client], session_data: dict):
     tasks = [
